@@ -21,12 +21,13 @@ class App extends Component {
 
   componentDidMount() {
     this.refs.audio.addEventListener("ended", () => {
-      this.onSelectChange({
-        target: {
-          value: ((parseInt(this.state.musicId) + 1) % 10).toString(),
-        }
-      })
-    })
+      this.setState({
+        musicId: ((parseInt(this.state.musicId) + 1) % 10).toString(),
+      }, () => {
+        this.refs.audio.load();
+        this.refs.audio.play();
+      });
+    });
   }
 
   render() {
