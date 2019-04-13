@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/rainmood/precache-manifest.5bf30f1bcf8840fe61e8ec55b7fba624.js"
+  "/rainmood/precache-manifest.0fe4c9df40d88be679c24a5ea7e3711d.js"
 );
 
 workbox.clientsClaim();

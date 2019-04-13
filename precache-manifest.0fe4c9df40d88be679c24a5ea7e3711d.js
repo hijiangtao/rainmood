@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/rainmood/static/js/runtime~main.85f740b5.js"
   },
   {
-    "revision": "43cd13acfd8f1de16f45",
-    "url": "/rainmood/static/js/main.2531e44e.chunk.js"
+    "revision": "87a79aaedab078ee4c0d",
+    "url": "/rainmood/static/js/main.4020e7a6.chunk.js"
   },
   {
     "revision": "d82afacfb8046780bdff",
     "url": "/rainmood/static/js/2.c272f57a.chunk.js"
   },
   {
-    "revision": "43cd13acfd8f1de16f45",
+    "revision": "87a79aaedab078ee4c0d",
     "url": "/rainmood/static/css/main.99e58424.chunk.css"
   },
   {
-    "revision": "595f7b65416de3404993f9d0909f863f",
+    "revision": "31c2cd3365716afb8054adad0cb6167c",
     "url": "/rainmood/index.html"
   }
 ];
