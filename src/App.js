@@ -5,7 +5,34 @@ const NUMBER_CONST = '0123456789';
 const REPO_GITHUB = "https://github.com/hijiangtao/rainmood";
 
 class App extends Component {
+  state = {
+    musicId: '0',
+  }
+
+  onSelectChange = (event) => {
+    this.setState({
+      musicId: event.target.value,
+    }, () => {
+      this.refs.audio.pause();
+      this.refs.audio.load();
+      this.refs.audio.play();
+    })
+  }
+
+  componentDidMount() {
+    this.refs.audio.addEventListener("ended", () => {
+      this.onSelectChange({
+        target: {
+          value: ((parseInt(this.state.musicId) + 1) % 10).toString(),
+        }
+      })
+    })
+  }
+
   render() {
+    const {musicId} = this.state;
+    // console.log(`${process.env.PUBLIC_URL}/music/${musicId}.mp3`)
+
     return (
       <div className="App">
         <header className="App-header">
@@ -19,7 +46,15 @@ class App extends Component {
           }}>
             循环播放十首电影原声精选，背景乐为下雨声。
             <br/>
-            详见&nbsp;
+            切换音乐▷
+            <select value={musicId} onChange={this.onSelectChange}>
+              {NUMBER_CONST.split('').map((e, i) => {
+                return (
+                  <option key={i} val={i} >{i}</option>
+                )
+              })}
+            </select>
+            &nbsp;详见&nbsp;
             <a
               className="App-link"
               href={REPO_GITHUB}
@@ -36,12 +71,8 @@ class App extends Component {
             <source src={process.env.PUBLIC_URL + "/music/main.m4a"} />
           </audio>
 
-          <audio autoPlay loop>
-            {NUMBER_CONST.split('').map((e, i) => {
-              return (
-                <source key={i} alt={`music-${i}`} src={`${process.env.PUBLIC_URL}/music/${i}.mp3`} />
-              )
-            })}  
+          <audio autoPlay ref="audio">
+            <source src={`${process.env.PUBLIC_URL}/music/${musicId}.mp3`} /> 
           </audio>
         </footer>
       </div>

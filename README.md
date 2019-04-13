@@ -1,3 +1,5 @@
+[![](./FireShot.png)](https://hijiangtao.github.io/rainmood/index.html)
+
 ## Rainmood
 
 一个简单项目，只有一个页面。循环播放十首电影原声精选，背景乐为下雨声。
@@ -18,6 +20,8 @@
 |Van Den Budenmayer Concerto en Mi Mineu, Version de 1798|||
 
 雨声源自 <https://www.rainymood.com/>.
+
+*注：媒体文件较大，需要一段时间才能加载完毕。*
 
 ## 联系
 
