@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Rainmood",
+  "name": "Listen to the rain with music, focus on the things that matters to you.",
   "icons": [
     {
       "src": "favicon.ico",
