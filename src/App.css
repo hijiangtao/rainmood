@@ -37,7 +37,8 @@
   /* animation-direction: alternate; */
   content: '';
   display: inline-block;
-  margin-left: -40vmin;
+  margin-left: -48vmin;
+  margin-right: 8vmin;
   /* animation: App-logo-swipe 1s linear; */
 }
 
@@ -67,7 +68,7 @@
 
 @keyframes App-logo-swipe {
   from {
-    transform: translateX(100%);
+    transform: translateX(120%);
     opacity: 0;
   }
   to {
@@ -78,7 +79,7 @@
 
 @keyframes App-logo-swipe-reverse {
   from {
-    transform: translateX(100%);
+    transform: translateX(120%);
     opacity: 1;
   }
   to {
