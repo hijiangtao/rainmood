@@ -73,7 +73,7 @@ class App extends Component {
           </audio>
 
           <audio autoPlay ref="audio">
-            <source src={`${process.env.PUBLIC_URL}/music/${musicId}.mp3`} /> 
+            <source src={`${process.env.PUBLIC_URL}/music/${musicId}.${musicId === '5' ? 'm4a' : 'mp3'}`} /> 
           </audio>
         </footer>
       </div>
