@@ -4,7 +4,9 @@
 
 .App-logo-static, .App-logo-switch:before, .App-logo-switch:after {
   background-size: contain;
-  background: url('https://hijiangtao.github.io/rainmood/favicon.png') no-repeat center center;
+  background-image: url('https://hijiangtao.github.io/rainmood/favicon.png');
+  background-repeat: no-repeat;
+  background-position: center;
   height: 40vmin;
   width: 40vmin;
   cursor: pointer;
