@@ -2,26 +2,24 @@
   text-align: center;
 }
 
-.App-logo-static {
-  animation: App-logo-spin infinite 24s linear;
+.App-logo-static, .App-logo-switch:before, .App-logo-switch:after {
+  background-size: contain;
   background: url('https://hijiangtao.github.io/rainmood/favicon.png') no-repeat center center;
   height: 40vmin;
   width: 40vmin;
   cursor: pointer;
 }
 
+.App-logo-static {
+  animation: App-logo-spin infinite 24s linear;
+}
+
 .App-logo-switch:after {
-  height: 40vmin;
-  width: 40vmin;
-  /* animation: App-logo-spin infinite 24s linear; */
   animation: App-logo-swipe 1s linear;
   -webkit-animation-fill-mode: forwards;
-  background: url('https://hijiangtao.github.io/rainmood/favicon.png') no-repeat center center;
   content: '';
   display: inline-block;
   /* margin-left: -40vmin; */
-  height: 40vmin;
-  width: 40vmin;
   /* animation: App-logo-spin infinite 24s linear; */
 }
 .App-logo-switch {
@@ -32,15 +30,12 @@
   cursor: pointer;
 }
 .App-logo-switch:before {
-  background: url('https://hijiangtao.github.io/rainmood/favicon.png') no-repeat center center;
   animation: App-logo-swipe-reverse 1s linear;
   -webkit-animation-fill-mode: forwards;
   /* animation-direction: alternate; */
   content: '';
   display: inline-block;
   margin-left: -40vmin;
-  height: 40vmin;
-  width: 40vmin;
   /* animation: App-logo-swipe 1s linear; */
 }
 
