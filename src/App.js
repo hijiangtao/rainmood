@@ -7,37 +7,60 @@ const REPO_GITHUB = "https://github.com/hijiangtao/rainmood";
 class App extends Component {
   state = {
     musicId: '0',
+    logoClassSubfixName: 'static', // 'static', 'switch'
   }
 
   onSelectChange = (event) => {
-    this.setState({
-      musicId: event.target.value,
-    }, () => {
-      this.refs.audio.pause();
-      this.refs.audio.load();
-      this.refs.audio.play();
-    })
-  }
-
-  componentDidMount() {
-    this.refs.audio.addEventListener("ended", () => {
       this.setState({
-        musicId: ((parseInt(this.state.musicId) + 1) % 10).toString(),
+        musicId: event.target.value,
       }, () => {
+        this.refs.audio.pause();
         this.refs.audio.load();
         this.refs.audio.play();
       });
+  }
+
+  forceMusicChange = () => {
+    this.setState({
+      musicId: ((parseInt(this.state.musicId) + 1) % 10).toString(),
+      logoClassSubfixName: 'switch',
+    }, () => {
+      this.refs.audio.load();
+      this.refs.audio.play();
     });
+
+    setTimeout(() => {
+      this.setState({
+        logoClassSubfixName: 'static',
+      })
+    }, 1000);
+  }
+
+  componentDidMount() {
+    this.refs.audio.addEventListener("ended", this.forceMusicChange);
   }
 
   render() {
     const {musicId} = this.state;
     // console.log(`${process.env.PUBLIC_URL}/music/${musicId}.mp3`)
+    console.log(this.state.logoClassSubfixName)
 
     return (
       <div className="App">
         <header className="App-header">
-          <img src={process.env.PUBLIC_URL + '/favicon.png'} className="App-logo" alt="logo" />
+          <div 
+            // style={{
+            //   background: `url(${process.env.PUBLIC_URL + '/favicon.png'}) no-repeat center center`,
+            // }}
+            className={`App-logo-${this.state.logoClassSubfixName}`} 
+            onClick={this.forceMusicChange}
+          >
+            {/* <img
+              className="App-logo-img"
+              onClick={this.forceMusicChange}
+              src={process.env.PUBLIC_URL + '/favicon.png'} 
+              alt="logo" /> */}
+          </div>
           <p>
             倾听 专注  
           </p>
