@@ -1,102 +1,158 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const NUMBER_CONST = '0123456789';
-const REPO_GITHUB = "https://github.com/hijiangtao/rainmood";
+const CONSTANTS = {
+  title: '倾听 专注',
+  description: '循环播放十首电影原声精选，背景乐为下雨声。',
+  github: 'https://github.com/hijiangtao/rainmood',
+  musicStrList: '0123456789',
+  changeMusicTitle: '手动切歌'
+}
 
 class App extends Component {
   state = {
     musicId: '0',
+    musicLoopFlag: false,
     logoClassSubfixName: 'static', // 'static', 'switch'
+    bgAudioVolume: 1,
+    musicAudioVolume: 1
   }
 
   onSelectChange = (event) => {
-      this.setState({
-        musicId: event.target.value,
-      }, () => {
-        this.refs.audio.pause();
-        this.refs.audio.load();
-        this.refs.audio.play();
-      });
+    this.setState({
+      musicId: event.target.value,
+    }, () => {
+      this.refs.musicAudioRef.pause();
+      this.refs.musicAudioRef.load();
+      this.refs.musicAudioRef.play();
+    });
   }
 
-  forceMusicChange = () => {
+  onLoopChange = (event) => {
     this.setState({
-      musicId: ((parseInt(this.state.musicId) + 1) % 10).toString(),
-      logoClassSubfixName: 'switch',
-    }, () => {
-      this.refs.audio.load();
-      this.refs.audio.play();
-    });
+      musicLoopFlag: event.target.value,
+    })
+  }
 
-    setTimeout(() => {
+  setVolume = (type) => {
+    return (event) => {
+      const volume = event.target.value;
       this.setState({
-        logoClassSubfixName: 'static',
-      })
-    }, 1000);
+        [`${type}Volume`]: volume,
+      });
+      this.refs[`${type}Ref`].volume = volume;
+    }
+  }
+
+  /**
+   * ignoreLoop 用于忽略 musicLoop 状态使用
+   */
+  forceMusicChange = ({ ignoreLoop }) => {
+    if (this.state.musicLoopFlag && !ignoreLoop) {
+      return () => { };
+    } else {
+      return () => {
+        this.setState({
+          musicId: ((parseInt(this.state.musicId) + 1) % 10).toString(),
+          logoClassSubfixName: 'switch',
+        }, () => {
+          this.refs.musicAudioRef.load();
+          this.refs.musicAudioRef.play();
+        });
+
+        setTimeout(() => {
+          this.setState({
+            logoClassSubfixName: 'static',
+          })
+        }, 1000);
+      }
+    }
   }
 
   componentDidMount() {
-    this.refs.audio.addEventListener("ended", this.forceMusicChange);
+    this.refs.musicAudioRef.addEventListener("ended", this.forceMusicChange({ ignoreLoop: false }));
   }
 
   render() {
-    const {musicId} = this.state;
-    // console.log(`${process.env.PUBLIC_URL}/music/${musicId}.mp3`)
-    console.log(this.state.logoClassSubfixName)
+    const { musicId, musicLoopFlag, bgAudioVolume, musicAudioVolume } = this.state;
 
     return (
       <div className="App">
-        <header className="App-header">
-          <div 
-            // style={{
-            //   background: `url(${process.env.PUBLIC_URL + '/favicon.png'}) no-repeat center center`,
-            // }}
-            className={`App-logo-${this.state.logoClassSubfixName}`} 
-            onClick={this.forceMusicChange}
-          >
-            {/* <img
-              className="App-logo-img"
-              onClick={this.forceMusicChange}
-              src={process.env.PUBLIC_URL + '/favicon.png'} 
-              alt="logo" /> */}
+        <section className="App-header">
+          <div
+            className={`App-logo-${this.state.logoClassSubfixName}`}
+            onClick={this.forceMusicChange({ ignoreLoop: true })}
+          />
+          <p>{CONSTANTS.title}</p>
+          <div className="inputContainer">
+            <label className="mr5" htmlFor="bgVolumeInput">雨声</label>
+            <input
+              id="bgVolumeInput"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={bgAudioVolume}
+              onChange={this.setVolume('bgAudio')}
+            />
           </div>
-          <p>
-            倾听 专注  
-          </p>
-          <span style={{
-            color: '#666',
-            fontSize: '0.8rem',
-          }}>
-            循环播放十首电影原声精选，背景乐为下雨声。
-            <br/>
-            切换音乐▷
-            <select value={musicId} onChange={this.onSelectChange}>
-              {NUMBER_CONST.split('').map((e, i) => {
+          <div className="inputContainer">
+            <label className="mr5" htmlFor="musicVolumeInput">音乐</label>
+            <input
+              id="musicVolumeInput"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={musicAudioVolume}
+              onChange={this.setVolume('musicAudio')}
+            />
+          </div>
+          <div className="inputContainer">
+            <label className="mr5" >{CONSTANTS.changeMusicTitle}</label>
+            <select className="mr5" value={musicId} onChange={this.onSelectChange}>
+              {CONSTANTS.musicStrList.split('').map((e, i) => {
                 return (
                   <option key={i} val={i} >{i}</option>
                 )
               })}
             </select>
+
+            <span className="mr5">|</span>
+          {/* </div>
+          <div className="inputContainer"> */}
+            <input
+              type="checkbox"
+              id="musicLoopInput"
+              name="musicLoopInput"
+              checked={musicLoopFlag}
+              onChange={this.onLoopChange}
+            />
+            <label htmlFor="musicLoopInput">单曲循环</label>
+          </div>
+
+          <span>
+            {CONSTANTS.description}
+            <br />
             &nbsp;详见&nbsp;
             <a
               className="App-link"
-              href={REPO_GITHUB}
+              href={CONSTANTS.github}
               target="_blank"
               rel="noopener noreferrer"
             >
               GitHub
             </a>
           </span>
-        </header>
+        </section>
 
         <footer>
-          <audio autoPlay loop>
+          <audio autoPlay ref="bgAudioRef" loop>
             <source src={process.env.PUBLIC_URL + "/music/main.m4a"} />
           </audio>
 
-          <audio autoPlay ref="audio">
-            <source src={`${process.env.PUBLIC_URL}/music/${musicId}.${musicId === '5' ? 'm4a' : 'mp3'}`} /> 
+          <audio autoPlay ref="musicAudioRef">
+            <source src={`${process.env.PUBLIC_URL}/music/${musicId}.${musicId === '5' ? 'm4a' : 'mp3'}`} />
           </audio>
         </footer>
       </div>
