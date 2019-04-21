@@ -28,9 +28,12 @@ class App extends Component {
     });
   }
 
-  onLoopChange = (event) => {
-    this.setState({
-      musicLoopFlag: event.target.value,
+  onLoopChange = () => {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        musicLoopFlag: !prevState.musicLoopFlag,
+      }
     })
   }
 
