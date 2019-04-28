@@ -52,7 +52,11 @@ class App extends Component {
    */
   forceMusicChange = ({ ignoreLoop }) => {
     if (this.state.musicLoopFlag && !ignoreLoop) {
-      return () => { };
+      return () => {
+        // console.log('Single music loop.');
+        this.refs.musicAudioRef.currentTime = 0;
+        this.refs.musicAudioRef.play();
+       };
     } else {
       return () => {
         this.setState({
